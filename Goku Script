@@ -1042,3 +1042,29 @@ humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 
 
 local player = game.Players.LocalPlayer
+
+-- Create the tool
+local tool = Instance.new("Tool")
+tool.Name = "Zenkai Boost"
+tool.RequiresHandle = false
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+-- Function to play the VFX when the tool is activated
+tool.Activated:Connect(function()
+    -- Clone and attach the VFX to the character
+    local Test = game.ReplicatedStorage.Resources.LastBreath.Resources.Exp.Charge.Attachment
+    local test = Test:Clone()
+    test.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+
+    -- Emit particles for the cloned VFX and stop it after emitting
+    for _, child in ipairs(test:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(15)
+            child.Enabled = true
+
+            -- Stop the emitter after a short time
+            wait(1)  -- Wait for 1 second (adjust if needed)
+            child.Enabled = false
+        end
+    end
+end)
