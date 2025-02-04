@@ -635,25 +635,21 @@ delay(Duration, function()
 Anim:Stop()
 end)
 
-local Test = game.ReplicatedStorage.Resources.LastBreath.Resources.GOUP.Attachment
-local test = Test:Clone()
-test.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-
 local Message = "You Ruthless... Worthless.. BASTARD!!"
 
 -- don't change anything here unless you know
 game:GetService("Chat"):Chat(game.Players.LocalPlayer.Character, Message)
 
+
 delay(1.8, function()
 
     Anim:Stop()
-end) 
 
-for _, child in ipairs(test:GetChildren()) do
-    if child:IsA("ParticleEmitter") then
-        child:Emit(15)
-        child.Enabled = true
+end)
+
+
     end
+
 end
 
 --[[END OF ULT ACTIVATION ANIM]]
