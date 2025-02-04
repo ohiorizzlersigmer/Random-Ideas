@@ -631,6 +631,13 @@ Anim:AdjustSpeed(0)
 Anim.TimePosition = startTime
 
 Anim:AdjustSpeed(0.6)
+delay(Duration, function() 
+Anim:Stop()
+end)
+
+local Test = game.ReplicatedStorage.Resources.LastBreath.Resources.GOUP.Attachment
+local test = Test:Clone()
+test.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 
 local Message = "You Ruthless... Worthless.. BASTARD!!"
 
@@ -641,10 +648,6 @@ delay(1.8, function()
 
     Anim:Stop()
 end) 
-
-local Test = game.ReplicatedStorage.Resources.LastBreath.Resources.GOUP.Attachment
-local test = Test:Clone()
-test.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 
 for _, child in ipairs(test:GetChildren()) do
     if child:IsA("ParticleEmitter") then
