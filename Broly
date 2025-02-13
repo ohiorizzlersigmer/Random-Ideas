@@ -1,0 +1,1046 @@
+-- //MOVES NAMES + FONT NEW UPDATE 🗣️🔥\\
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local playerGui = player:WaitForChild("PlayerGui")
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local buttonData = {
+    {name = "1", text = "GO BROLY GO!", font = Enum.Font.SourceSans},
+    {name = "2", text = "Legendary Variants", font = Enum.Font.SourceSans},
+    {name = "3", text = "Weak Punch", font = Enum.Font.SourceSans},
+    {name = "4", text = "Fists of Wrath", font = Enum.Font.SourceSans},
+}
+
+for _, data in pairs(buttonData) do
+    local baseButton = hotbarFrame:FindFirstChild(data.name).Base
+    local ToolName = baseButton.ToolName
+    ToolName.Text = data.text
+    ToolName.Font = data.font
+end
+
+local function waitForGui()
+    while true do
+        local screenGui = playerGui:FindFirstChild("ScreenGui")
+        if screenGui then
+            local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+            if magicHealthFrame then
+                local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+                if textLabel then
+                    textLabel.Text = "Full Power" -- //ULT NAME\\
+                    textLabel.Font = Enum.Font.Ubuntu --//TEXT ULT FONT 🅰️\\
+                    return
+                end
+            end
+        end
+        wait(1)
+    end
+end
+
+waitForGui()
+
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+-- Local Player
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- GUI and color adjustment function
+local function updateBarColor()
+    -- Find the ScreenGui on the screen
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    if not screenGui then return end
+
+    -- Find the MagicHealth Frame
+    local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+    if not magicHealthFrame then return end
+
+    -- Find the Health Frame
+    local healthFrame = magicHealthFrame:FindFirstChild("Health")
+    if not healthFrame then return end
+
+    -- Find the Bar Frame
+    local barFrame = healthFrame:FindFirstChild("Bar")
+    if not barFrame then return end
+
+    -- Find the ImageLabel with ImageColor3 property inside the Bar Frame
+    local imageLabel = barFrame:FindFirstChild("Bar")
+    if not imageLabel or not imageLabel:IsA("ImageLabel") then return end
+
+    -- Set the color to yellow
+    imageLabel.ImageColor3 = Color3.fromRGB(0, 255, 0) -- Yellow
+end
+
+-- Check the GUI again when the character resets
+local function onCharacterAdded(character)
+    -- Update the GUI
+    updateBarColor()
+end
+
+-- Check the local player's character
+local function onPlayerAdded()
+    local character = player.Character or player.CharacterAdded:Wait()
+    onCharacterAdded(character)
+
+    -- Check again when the character changes
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+-- Check when the player is added
+Players.PlayerAdded:Connect(onPlayerAdded)
+if player then
+    onPlayerAdded()
+end
+
+-- LocalScript inside StarterPlayerScripts
+-- m1's
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- the anim that will get track
+
+local animationIdsToStop = {
+
+    [13532604085] = true,
+
+}
+-- the specific anim
+local replacementAnimations = {
+
+    ["13532604085"] = "rbxassetid://13491635433",  -- 3rd m1's dont change the [12345678910] change the rbxassetid://123..
+
+}
+
+local queue = {}
+local isAnimating = false
+local function playReplacementAnimation(animationId)
+    if isAnimating then
+        table.insert(queue, animationId)
+        return
+    end
+    
+    -- end of m1s
+    isAnimating = true
+
+    local replacementAnimationId = replacementAnimations[tostring(animationId)]
+
+    if replacementAnimationId then
+
+        local AnimAnim = Instance.new("Animation")
+
+        AnimAnim.AnimationId = replacementAnimationId
+
+        local Anim = humanoid:LoadAnimation(AnimAnim)
+
+        Anim:Play()
+
+       
+
+        Anim.Stopped:Connect(function()
+
+            isAnimating = false
+
+            if #queue > 0 then
+
+                local nextAnimationId = table.remove(queue)
+
+                playReplacementAnimation(nextAnimationId)
+
+            end
+        end)
+
+    else
+
+        isAnimating = false
+
+    end
+end
+
+local function stopSpecificAnimations()
+
+    for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+
+        local animationId = tonumber(track.Animation.AnimationId:match("%d+"))
+
+        if animationIdsToStop[animationId] then
+
+            track:Stop()
+        end
+    end
+end
+
+local function onAnimationPlayed(animationTrack)
+
+    local animationId = tonumber(animationTrack.Animation.AnimationId:match("%d+"))
+
+    if animationIdsToStop[animationId] then
+
+        stopSpecificAnimations()
+
+        animationTrack:Stop()
+     
+        local replacementAnimationId = replacementAnimations[tostring(animationId)]
+
+        if replacementAnimationId then
+
+            playReplacementAnimation(animationId)
+
+        end
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- Function to show the notification
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "RAAAGGHHHHHHHH... KAAAAKKAAAROOOT....",
+    Text = "This Is, The legendary super saiyan",
+    Icon = "rbxassetid://86854375073337", -- Optional, you can provide an image asset ID or leave empty
+    Duration = 3 -- Duration in seconds
+})
+
+--[[MOVE 1 ANIM]]
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animationId = 12272894215
+
+-- Animation logic
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        -- Stop all playing animations
+        for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://17561757697"  -- Replace with your Sound ID
+
+-- Set other properties for the sound
+        sound.Volume = 0.7
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1.3 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+        -- Play new animation
+        local newAnim = Instance.new("Animation")
+        newAnim.AnimationId = "rbxassetid://15997042291"
+        local loadedAnim = humanoid:LoadAnimation(newAnim)
+
+        local startTime = 0
+        loadedAnim:Play()
+        loadedAnim:AdjustSpeed(1)
+        loadedAnim.TimePosition = startTime
+        loadedAnim:AdjustSpeed(1)
+        task.wait(0.2)
+        sound:Play()
+        task.wait(0.4)
+        loadedAnim:Stop()
+        
+        -- Add your sound and particle effects below this line
+    end
+end
+
+-- Connect the function to humanoid's animation played event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+--[[END OF MOVE 1 ANIM]]
+
+--[[MOVE ANIM]]
+
+local Players = game:GetService("Players")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animationId = 12273188754
+local player = Players.LocalPlayer
+local Head = character:FindFirstChild("Head")
+
+local FCA = Head.FaceCenterAttachment
+local FFA = Head.FaceFrontAttachment
+
+-- Animation logic
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        -- Stop all playing animations
+        for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+                 -- Create a new sound object
+        local sound2 = Instance.new("Sound")
+
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound2.SoundId = "rbxassetid://507150998"  -- Replace with your Sound ID
+
+-- Set other properties for the sound
+        sound2.Volume = 5
+        sound2.Looped = false  -- Set to true if you want the sound to loop
+        sound2.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound2.PlaybackSpeed = playbackSpeed
+
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Optionally, destroy the sound after it finishes playing
+        sound2.Ended:Connect(function()
+            sound2:Destroy()
+        end)
+        -- Play new animation
+        local newAnim = Instance.new("Animation")
+        newAnim.AnimationId = "rbxassetid://14348708797"
+        local loadedAnim = humanoid:LoadAnimation(newAnim)
+
+        local startTime = 0
+        loadedAnim:Play()
+        loadedAnim:AdjustSpeed(1.6)
+        loadedAnim.TimePosition = startTime
+        loadedAnim:AdjustSpeed(1.6)
+        sound2:Play()
+        if loadedAnim then
+            local trail = Instance.new("Trail")
+            trail.Attachment0 = FFA
+            trail.Attachment1 = FCA
+            trail.Texture = "rbxassetid://8120278384"
+            trail.Lifetime = 0.2
+            trail.Brightness = 500
+            trail.FaceCamera = true
+            local color1 = Color3.fromRGB(0, 255, 0)
+            local color2 = Color3.fromRGB(0, 255, 0)
+            trail.Color = ColorSequence.new(color1, color2)
+            trail.Parent = Head
+            loadedAnim.Ended:Wait()
+            trail:Destroy()
+        end    
+        -- Add your sound and particle effects below this line
+    end
+end
+
+-- Connect the function to humanoid's animation played event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+--[[END OF MOVE ANIM]]
+
+-- move 2
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animationId = 12296113986
+
+-- Animation logic
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        -- Stop all playing animations
+        for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+local Test = game:GetService("ReplicatedStorage").Resources.FiveSeasonsFX.CharFX.ArmEnabled
+local test = Test:Clone()
+test.Parent = game.Players.LocalPlayer.Character["Left Arm"]
+
+local Test2 = game:GetService("ReplicatedStorage").Resources.UFW:GetChildren()[26].Particles
+local test2 = Test2:Clone()
+test2.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+local Test3 = game:GetService("ReplicatedStorage").Resources.WhirlwindDrop.GroundImpact.Ground:GetChildren()[2]
+local test3 = Test3:Clone()
+test3.Parent = game.Players.LocalPlayer.Character["Left Arm"]
+
+
+        -- Play new animation
+        local newAnim = Instance.new("Animation")
+        newAnim.AnimationId = "rbxassetid://14875667895"
+        local loadedAnim = humanoid:LoadAnimation(newAnim)
+
+        local startTime = 0
+        loadedAnim:Play()
+        loadedAnim:AdjustSpeed(0.9)
+        loadedAnim.TimePosition = startTime
+        loadedAnim:AdjustSpeed(0.9)
+        task.wait(1)
+        for _, child in ipairs(test:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(5)
+                child.Enabled = true
+
+            end
+        end
+        for _, child in ipairs(test3:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(1)
+                child.Enabled = true
+                task.wait(1.2)
+                test:Destroy()
+                test2:Destroy()
+                test3:Destroy()
+            end
+        end
+        -- Add your sound and particle effects below this line
+    end
+end
+
+-- Connect the function to humanoid's animation played event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- end of move 2
+
+-- move 3
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animationId = 12309835105
+
+-- Animation logic
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        -- Stop all playing animations
+        for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://10494606424"  -- Replace with your Sound ID
+
+-- Set other properties for the sound
+        sound.Volume = 3
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 0.8 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+
+        local Test = game:GetService("ReplicatedStorage").Resources.FiveSeasonsFX.CharFX.ArmFX local test = Test:Clone()
+        test.Parent = game.Players.LocalPlayer.Character["Right Arm"]
+
+
+        for _, child in ipairs(test:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+
+        local Test2 = game:GetService("ReplicatedStorage").Resources.BloodSplatter.Attachment local test2 = Test2:Clone()
+        test2.Parent = game.Players.LocalPlayer.Character["Right Arm"]
+
+
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+
+        -- Play new animation
+        local newAnim = Instance.new("Animation")
+        newAnim.AnimationId = "rbxassetid://10468665991"
+        local loadedAnim = humanoid:LoadAnimation(newAnim)
+
+        local startTime = 0
+        loadedAnim:Play()
+        loadedAnim:AdjustSpeed(1.1)
+        loadedAnim.TimePosition = startTime
+        loadedAnim:AdjustSpeed(1.1)
+        task.wait(1)
+        local Test3 = game:GetService("ReplicatedStorage").Resources.MeleeEffects.Amplify.Real.Part.StrongMoneCustom local test3 = Test3:Clone()
+        test3.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+
+        for _, child in ipairs(test3:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child:Emit(15)
+                child.Enabled = true
+                sound:Play()
+                task.wait(1)
+                test:Destroy()
+                test2:Destroy()
+                task.wait(0.3)
+                test3:Destroy()
+            end
+        end
+        -- Add your sound and particle effects below this line
+    end
+end
+
+-- Connect the function to humanoid's animation played event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- end of move 3
+
+-- Death Counter
+
+local animationId = 12460977270 -- The animation to track
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop all currently playing animations
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://9112939555"  -- Replace with your Sound ID
+-- Set other properties for the sound
+        sound.Volume = 1.2
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1.7 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+        sound:Play()
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)        
+        
+        -- Play the specific animation
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://17097146599" -- The specific animation
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
+
+        local startTime = 0 -- Speed for specific animation
+        Anim:Play()
+        Anim:AdjustSpeed(0)  -- Stops animation initially
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1.5) -- Adjust speed later
+        
+        local Test = game:GetService("ReplicatedStorage").Emotes.VFX.RealAssets.Humiliation.Part.Necksnap local test = Test:Clone()
+        test.Parent = game.Players.LocalPlayer.Character["Hitbox_RightArm"]
+
+
+        for _, child in ipairs(test:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 1, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+        local Test2 = game:GetService("ReplicatedStorage").Resources.Uppercut_Slam.Impact local test2 = Test2:Clone()
+        test2.Parent = game.Players.LocalPlayer.Character["Hitbox_RightArm"]
+
+
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 1, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+        local Test3 = game:GetService("ReplicatedStorage").Resources.StoicBomb.Impact.Part.Spin local test3 = Test3:Clone()
+        test3.Parent = game.Players.LocalPlayer.Character["Hitbox_RightArm"]
+
+
+        for _, child in ipairs(test3:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(15)
+                child.Enabled = true
+                task.wait(1.5)
+                Anim.Ended:Wait()
+                test:Destroy()
+                test2:Destroy()
+                test3:Destroy()
+                
+            end
+        end
+    end
+end
+    
+-- Connect Death Counter and Wall Combo functions to the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    onAnimationPlayed(animationTrack) -- Connect death counter
+end)
+
+-- End of c
+
+-- Serious Punch
+local animationId = 12467789963 -- The animation to track
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop all currently playing animations
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+        
+        local sound = Instance.new("Sound")
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://2776154862"  -- Replace with your Sound ID
+-- Set other properties for the sound
+        sound.Volume = 1
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+        sound:Play()
+        
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)        
+        
+        -- Play the specific animation
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://16734584478" -- The specific animation
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
+
+        local startTime = 0 -- Speed for specific animation
+        Anim:Play()
+        Anim:AdjustSpeed(0)  -- Stops animation initially
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1.2) -- Adjust speed later
+
+        local Test2 = game:GetService("ReplicatedStorage").Resources.IceSpear.Throw.Attachment local test2 = Test2:Clone()
+        test2.Parent = game.Players.LocalPlayer.Character["Hitbox_Head"]
+
+
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                
+                child:Emit(20)
+                child.Enabled = true
+                task.wait(0.1)
+                child:Destroy()
+                
+            end
+        end
+    end
+end
+    
+-- Connect Death Counter and Wall Combo functions to the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    onAnimationPlayed(animationTrack) -- Connect death counter
+end)
+
+-- End of Serious Punch
+
+-- Tableflip
+local tableflipAnimationId = 14057231976 -- the anim that will get tracked
+
+-- Function to handle Tableflip animation
+local function onTableFlipPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. tableflipAnimationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop all currently playing animations before playing the new one
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://245537790"  -- Replace with your Sound ID
+-- Set other properties for the sound
+        sound.Volume = 5
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)        
+        
+        local TableflipAnim = Instance.new("Animation")
+        TableflipAnim.AnimationId = "rbxassetid://16737255386" -- the specific table flip animation
+        local Anim = Humanoid:LoadAnimation(TableflipAnim)
+
+        local startTime = 0 -- speed for the specific anim
+        Anim:Play()
+        Anim:AdjustSpeed(2)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(2)
+        local red = Instance.new("Fire") -- example
+        local black = red:Clone()  -- You can name the file however you want
+        
+        red.Parent = game.Players.LocalPlayer.Character["Hitbox_RightArm"]
+        black.Parent = red.Parent
+        
+        red.Color = Color3.new(0, 255, 0)
+        red.SecondaryColor = Color3.new(0, 0, 0)
+        red.Heat = 10
+        red.Size = 50
+        red.TimeScale = 91923938432736452283
+        
+        black.Color = Color3.new(0, 255, 0)
+        black.SecondaryColor = black.Color
+        black.Heat = red.Heat
+        black.Size = 5
+        black.TimeScale = red.TimeScale
+        wait(1.5)
+        sound:Play()
+        local Test = game:GetService("ReplicatedStorage").game.Resources.UFW.vfx.Scene.Blackhole.Part.Glow local test = Test:Clone()
+        test.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+        
+        for _, child in ipairs(test:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                
+                child.Color = ColorSequence.new(Color3.new(0, 255, 0))
+                child:Emit(15)
+                child.Enabled = true
+                task.wait(0.1)
+                child:Destroy()        
+                red:Destroy()
+                black:Destroy()
+
+            end
+        end
+
+        local Test2 = game:GetService("ReplicatedStorage").Resources.KJEffects.lastimpact.lastuimapktu local test2 = Test2:Clone()
+        test2.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                
+                child:Emit(15)
+                child.Enabled = true
+                task.wait(1)
+                test2:Destroy()
+            end
+        end
+    end
+end
+
+-- Connect Tableflip function to the AnimationPlayed event
+local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    onTableFlipPlayed(animationTrack)
+end)
+
+-- End of Tableflip
+    
+-- omni
+local tableflipAnimationId = 13630786846 -- the anim that will get tracked
+
+-- Function to handle Tableflip animation
+local function onTableFlipPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. tableflipAnimationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop all currently playing animations before playing the new one
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+        local TableflipAnim = Instance.new("Animation")
+        TableflipAnim.AnimationId = "rbxassetid://135104210400610" -- the specific table flip animation
+        local Anim = Humanoid:LoadAnimation(TableflipAnim)
+
+        local startTime = 0 -- speed for the specific anim
+        Anim:Play()
+        Anim:AdjustSpeed(0.8)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(0.8)
+        
+    end
+end
+
+-- Connect Tableflip function to the AnimationPlayed event
+local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    onTableFlipPlayed(animationTrack)
+end)
+
+-- End of omni
+    
+-- omni
+local tableflipAnimationId = 13813099821 -- the anim that will get tracked
+
+-- Function to handle Tableflip animation
+local function onTableFlipPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. tableflipAnimationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop all currently playing animations before playing the new one
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+        local TableflipAnim = Instance.new("Animation")
+        TableflipAnim.AnimationId = "rbxassetid://14349470649" -- the specific table flip animation
+        local Anim = Humanoid:LoadAnimation(TableflipAnim)
+
+        local startTime = 0 -- speed for the specific anim
+        Anim:Play()
+        Anim:AdjustSpeed(1)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1)
+    end
+end
+
+-- Connect Tableflip function to the AnimationPlayed event
+local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    onTableFlipPlayed(animationTrack)
+end)
+
+-- End of omni
+        
+-- ult anim
+local animationId = 12342141464 -- the animation ID that triggers the aura
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Triggered when the animation is played
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+
+        -- Stop all currently playing animations
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+        -- Load and play the specific ultimate animation
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://16734584478" -- the specific animation
+
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
+        
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://5821817470"  -- Replace with your Sound ID
+-- Set other properties for the sound
+        sound.Volume = 1.2
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+        
+        
+        local startTime = 6.5 -- the specific start time for the animation
+        Anim:Play()
+        Anim:AdjustSpeed(1.5)  -- Set speed to 0 initially
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1.5)-- Restore speed after starting the animation
+        task.wait(1)
+        sound:Play()
+        -- Load and play the specific ultimate animation
+        local AnimAnim2 = Instance.new("Animation")
+        AnimAnim2.AnimationId = "rbxassetid://17120750680" -- the specific animation
+
+        local Anim2 = Humanoid:LoadAnimation(AnimAnim2)
+
+        local startTime = 0 -- the specific start time for the animation
+        Anim.Ended:Wait()
+                 -- Create a new sound object
+        local sound = Instance.new("Sound")
+-- Set the Sound ID (example Sound ID from Roblox library)
+        sound.SoundId = "rbxassetid://16734584478"  -- Replace with your Sound ID
+-- Set other properties for the sound
+        sound.Volume = 3
+        sound.Looped = false  -- Set to true if you want the sound to loop
+        sound.PlayOnRemove = false
+-- Set the playback speed (change speed here)
+        local playbackSpeed = 1 -- Adjust playback speed (1 = normal, 1.5 = faster, 0.5 = slower)
+        sound.PlaybackSpeed = playbackSpeed
+-- Parent the sound to the player's PlayerGui so it plays locally
+        sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+        sound:Play()
+-- Optionally, destroy the sound after it finishes playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+        
+
+        Anim2:Play()
+        Anim2:AdjustSpeed(1)  -- Set speed to 0 initially
+        Anim2.TimePosition = startTime
+        Anim2:AdjustSpeed(1)  -- Restore speed after starting the animation
+        coroutine.wrap(function()
+            local ts = game:GetService("TweenService")
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+ 
+            local Dialogue = Instance.new("BillboardGui")
+            local Chat1 = Instance.new("Frame")
+            local Sub = Instance.new("TextLabel")
+ 
+            Dialogue.Active = true
+            Dialogue.Size = UDim2.new(15, 0, 15, 0)
+            Dialogue.StudsOffset = Vector3.new(0, 0, 2)
+            Dialogue.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+            Dialogue.Name = "Dialogue"
+            Dialogue.Parent = humanoidRootPart
+ 
+            Chat1.AnchorPoint = Vector2.new(0.5, 0.5)
+            Chat1.BackgroundColor3 = Color3.new(1, 1, 1)
+            Chat1.BorderColor3 = Color3.new(0, 0, 0)
+            Chat1.BorderSizePixel = 1.5
+            Chat1.Position = UDim2.new(0.600000024, 0, -0.2, 0)
+            Chat1.Size = UDim2.new(0.12, 0, 0.2, 0)
+            Chat1.Name = "Chat1"
+            Chat1.BackgroundTransparency = 1
+            Chat1.Parent = Dialogue
+ 
+            Sub.FontFace = Font.new("rbxassetid://12187375716", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
+            Sub.Text = "RAAAAAAGHHHHHH... KAAAAKAAAAAROOOOOOOOTTT!!!!!!!!!!!"
+            Sub.TextColor3 = Color3.new(0, 0, 0)
+            Sub.TextScaled = true
+            Sub.TextSize = 25
+            Sub.TextWrapped = true
+            Sub.AnchorPoint = Vector2.new(0.5, 0.5)
+            Sub.BackgroundColor3 = Color3.new(1, 1, 1)
+            Sub.TextTransparency = 1
+            Sub.BorderColor3 = Color3.new(0, 0, 0)
+            Sub.BorderSizePixel = 0
+            Sub.Position = UDim2.new(0.5, 0, 0.5, 0)
+            Sub.Size = UDim2.new(0.9, 0, 1, 0)
+            Sub.Name = "Sub"
+            Sub.Parent = Chat1
+ 
+            game.Debris:AddItem(Chat1, 25)
+            game.Debris:AddItem(Sub, 25)
+ 
+            local function tweenProperty(object, properties, time)
+                local tweenInfo = TweenInfo.new(time, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+                local tween = ts:Create(object, tweenInfo, properties)
+                tween:Play()
+                return tween
+            end
+ 
+            tweenProperty(Chat1, {BackgroundTransparency = 0}, 1)
+            tweenProperty(Sub, {TextTransparency = 0}, 1)
+            tweenProperty(Chat1, {Position = UDim2.new(0.6, 0, 0.4, 0)}, 1)
+            task.wait(2)
+            tweenProperty(Chat1, {BackgroundTransparency = 1}, 2)
+            tweenProperty(Sub, {TextTransparency = 1}, 2)
+        end)()
+        
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local Head = character:FindFirstChild("Head")
+
+        if Head then
+            local tatoo = Instance.new("Decal")
+            tatoo.Texture = "rbxassetid://4528238238"
+            tatoo.Parent = Head
+        end
+        
+        local Test = game:GetService("StarterPlayer").StarterCharacter.Torso.GreenAura local test = Test:Clone()
+        test.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+
+        for _, child in ipairs(test:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child.Color = ColorSequence.new(Color3.new(255, 0, 0))
+                child:Emit(15)
+                child.Enabled = true
+            end
+        end
+        local Test2 = game:GetService("ReplicatedStorage").Emotes.AmplifyVfx.auraoff.Attachment local test2 = Test2:Clone()
+        test2.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+
+
+        for _, child in ipairs(test2:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+        
+                child.Color = ColorSequence.new(Color3.new(0, 0, 0))
+                child:Emit(1)
+                child.Enabled = true
+                task.wait(40)
+                test:Destroy()
+                test2:Destroy()
+            end
+        end
+    end
+end
+
+-- Connect to the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
