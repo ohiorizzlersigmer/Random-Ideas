@@ -164,6 +164,25 @@ Anim.TimePosition = startTime
 
 Anim:AdjustSpeed(0.3)
 
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local movementSpeed = 200  -- Set the desired speed
+
+-- Function to move the player forward
+local function moveForward()
+    local runService = game:GetService("RunService")
+    
+    -- Continuously apply velocity to the HumanoidRootPart to maintain constant speed
+    while true do
+        local forwardDirection = humanoidRootPart.CFrame.LookVector
+        humanoidRootPart.Velocity = forwardDirection * movementSpeed
+        runService.Stepped:Wait()
+    end
+end
+
+-- Example of how you might use this function
+moveForward()  -- Call this to start moving the player forward
 
     end
 
