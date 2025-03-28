@@ -158,32 +158,54 @@ local startTime = 0
 
 Anim:Play(0)
 
-Anim:AdjustSpeed(0.3)
+Anim:AdjustSpeed(0.1)
 
 Anim.TimePosition = startTime
 
 Anim:AdjustSpeed(0.3)
 
 local player = game.Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
 local movementSpeed = 200  -- Set the desired speed
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://16139402582"  -- Animation ID for stopping the movement
+
+local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+local animationTrack
 
 -- Function to move the player forward
 local function moveForward()
     local runService = game:GetService("RunService")
-    
+
     -- Continuously apply velocity to the HumanoidRootPart to maintain constant speed
-    while true do
+    while animationTrack and animationTrack.IsPlaying do
         local forwardDirection = humanoidRootPart.CFrame.LookVector
         humanoidRootPart.Velocity = forwardDirection * movementSpeed
         runService.Stepped:Wait()
     end
 end
 
--- Example of how you might use this function
-moveForward()  -- Call this to start moving the player forward
+-- Function to start the animation and move the player forward
+local function startRunning()
+    -- Load and play the animation
+    animationTrack = animator:LoadAnimation(animation)
+    animationTrack:Play()
 
+    -- Call moveForward when the animation starts
+    moveForward()
+
+    -- Stop moving when the animation stops
+    animationTrack.Stopped:Connect(function()
+        humanoidRootPart.Velocity = Vector3.new(0, 0, 0)  -- Stop movement when animation ends
+    end)
+end
+
+-- Example of how you might use this function to start running (when you want to play the animation)
+startRunning()
     end
 
 end
