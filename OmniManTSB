@@ -1,403 +1,214 @@
 -- Moves name and ult
 
 -- Moves 1 Name
-
 local player = game.Players.LocalPlayer
-
 local playerGui = player.PlayerGui
-
 local hotbar = playerGui:FindFirstChild("Hotbar")
-
 local backpack = hotbar:FindFirstChild("Backpack")
-
 local hotbarFrame = backpack:FindFirstChild("Hotbar")
-
 local baseButton = hotbarFrame:FindFirstChild("1").Base
-
 local ToolName = baseButton.ToolName
-
-
-ToolName.Text = "You'll Learn"
+ToolName.Text = "Maybe This Time You'll Learn"
 
 -- Moves 2 Name
-
 local player = game.Players.LocalPlayer
-
 local playerGui = player.PlayerGui
-
 local hotbar = playerGui:FindFirstChild("Hotbar")
-
 local backpack = hotbar:FindFirstChild("Backpack")
-
 local hotbarFrame = backpack:FindFirstChild("Hotbar")
-
 local baseButton = hotbarFrame:FindFirstChild("2").Base
-
 local ToolName = baseButton.ToolName
-
-
 ToolName.Text = "Wrong to Value Them over your Own kind."
 
 -- Moves 3 Name
-
 local player = game.Players.LocalPlayer
-
 local playerGui = player.PlayerGui
-
 local hotbar = playerGui:FindFirstChild("Hotbar")
-
 local backpack = hotbar:FindFirstChild("Backpack")
-
 local hotbarFrame = backpack:FindFirstChild("Hotbar")
-
 local baseButton = hotbarFrame:FindFirstChild("3").Base
-
 local ToolName = baseButton.ToolName
-
-
-ToolName.Text = "500 More Years."
+ToolName.Text = "Whats 500 More Years?"
 
 -- Moves 4 Name
-
-
 local player = game.Players.LocalPlayer
-
 local playerGui = player.PlayerGui
-
 local hotbar = playerGui:FindFirstChild("Hotbar")
-
 local backpack = hotbar:FindFirstChild("Backpack")
-
 local hotbarFrame = backpack:FindFirstChild("Hotbar")
-
 local baseButton = hotbarFrame:FindFirstChild("4").Base
-
 local ToolName = baseButton.ToolName
-
-
-ToolName.Text = "Viltrumite Instinct"
-
+ToolName.Text = "Are You Sure?"
 
 local Players = game:GetService("Players")
-
 local player = Players.LocalPlayer
-
 local playerGui = player:WaitForChild("PlayerGui")
 
 -- Ult here
-
 local function findGuiAndSetText()
-
     local screenGui = playerGui:FindFirstChild("ScreenGui")
-
     if screenGui then
-
         local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
-
         if magicHealthFrame then
-
             local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
-
             if textLabel then
-
                 textLabel.Text = "Avalanche Blow"
-
             end
-
         end
-
     end
-
 end
-
 
 playerGui.DescendantAdded:Connect(findGuiAndSetText)
-
 findGuiAndSetText()
 
--- Moves
-
 -- Move 1 here
-
 local animationId = 12273188754
-
-
 local player = game.Players.LocalPlayer
-
 local character = player.Character or player.CharacterAdded:Wait()
-
 local humanoid = character:WaitForChild("Humanoid")
 
+local modelIdMove1 = "8273626483"  -- Replace with your actual model ID
 
 local function onAnimationPlayed(animationTrack)
-
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        -- Spawn the model for Move 1
+        local model = game:GetObjects("rbxassetid://" .. modelIdMove1)[1]
+        model.Parent = workspace
+        if not model.PrimaryPart then
+            model.PrimaryPart = model:FindFirstChildWhichIsA("BasePart")
+        end
+        model:SetPrimaryPartCFrame(character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -300) * CFrame.Angles(math.rad(90), 0, 0))
+        game:GetService("Debris"):AddItem(model, 10)
 
+        -- Stop any playing animations for the player
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
 
-local p = game.Players.LocalPlayer
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
 
-local Humanoid = p.Character:WaitForChild("Humanoid")
+        -- Load and play the new animation
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://16139402582"  -- Replace with the desired animation ID
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
 
+        local startTime = 0
+        Anim:Play(0)
+        Anim:AdjustSpeed(0.1)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(0.3)
 
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+        -- Move the player forward during the animation
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local movementSpeed = 700  -- Set the desired speed
 
-    animTrack:Stop()
+        -- Function to move the player forward
+        local function moveForward()
+            local runService = game:GetService("RunService")
+            local endTime = tick() + 3  -- Time when the movement should stop
 
-end
+            while Anim.IsPlaying and tick() < endTime do
+                local forwardDirection = humanoidRootPart.CFrame.LookVector
+                humanoidRootPart.Velocity = forwardDirection * movementSpeed
+                runService.Stepped:Wait()
+            end
 
+            humanoidRootPart.Velocity = Vector3.new(0, 0, 0)  -- Stop movement after 3 seconds
+        end
 
-local AnimAnim = Instance.new("Animation")
-
-AnimAnim.AnimationId = "rbxassetid://16139402582"
-
-local Anim = Humanoid:LoadAnimation(AnimAnim)
-
-
-local startTime = 0
-
-
-Anim:Play(0)
-
-Anim:AdjustSpeed(0.1)
-
-Anim.TimePosition = startTime
-
-Anim:AdjustSpeed(0.3)
-
-local player = game.Players.LocalPlayer
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-local humanoid = character:WaitForChild("Humanoid")
-local movementSpeed = 200  -- Set the desired speed
-
-local animation = Instance.new("Animation")
-animation.AnimationId = "rbxassetid://16139402582"  -- Animation ID for stopping the movement
-
-local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
-local animationTrack
-
--- Function to move the player forward
-local function moveForward()
-    local runService = game:GetService("RunService")
-
-    -- Continuously apply velocity to the HumanoidRootPart to maintain constant speed
-    while animationTrack and animationTrack.IsPlaying do
-        local forwardDirection = humanoidRootPart.CFrame.LookVector
-        humanoidRootPart.Velocity = forwardDirection * movementSpeed
-        runService.Stepped:Wait()
+        -- Start moving the player forward
+        moveForward()
     end
 end
-
--- Function to start the animation and move the player forward
-local function startRunning()
-    -- Load and play the animation
-    animationTrack = animator:LoadAnimation(animation)
-    animationTrack:Play()
-
-    -- Call moveForward when the animation starts
-    moveForward()
-
-    -- Stop moving when the animation stops
-    animationTrack.Stopped:Connect(function()
-        humanoidRootPart.Velocity = Vector3.new(0, 0, 0)  -- Stop movement when animation ends
-    end)
-end
-
--- Example of how you might use this function to start running (when you want to play the animation)
-startRunning()
-    end
-
-end
-
--- Move 2 here
-
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 
+-- Move 2 here
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId2 = 12296113986
 
-local animationId = 12296113986
+local function onAnimationPlayedMove2(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId2 then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
 
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
 
-local player = game.Players.LocalPlayer
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://Animation id here"
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
 
-local character = player.Character or player.CharacterAdded:Wait()
-
-local humanoid = character:WaitForChild("Humanoid")
-
-
-local function onAnimationPlayed(animationTrack)
-
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
-
-
-local p = game.Players.LocalPlayer
-
-local Humanoid = p.Character:WaitForChild("Humanoid")
-
-
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-
-    animTrack:Stop()
-
-end
-
-
-local AnimAnim = Instance.new("Animation")
-
-AnimAnim.AnimationId = "rbxassetid://Animation id here"
-
-local Anim = Humanoid:LoadAnimation(AnimAnim)
-
-
-local startTime = 0
-
-
-Anim:Play()
-
-Anim:AdjustSpeed(0.5)
-
-Anim.TimePosition = startTime
-
-Anim:AdjustSpeed(1)
-
-
+        local startTime = 0
+        Anim:Play()
+        Anim:AdjustSpeed(0.5)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1)
     end
-
 end
 
 -- Move 3 here
+humanoid.AnimationPlayed:Connect(onAnimationPlayedMove2)
+local animationId3 = 12309835105
 
+local function onAnimationPlayedMove3(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId3 then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
 
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://Animation id here"
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
 
-local animationId = 12309835105
+        local startTime = 0
+        Anim:Play()
+        Anim:AdjustSpeed(1)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1.1)
 
-
-local player = game.Players.LocalPlayer
-
-local character = player.Character or player.CharacterAdded:Wait()
-
-local humanoid = character:WaitForChild("Humanoid")
-
-
-local function onAnimationPlayed(animationTrack)
-
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
-
-
-local p = game.Players.LocalPlayer
-
-local Humanoid = p.Character:WaitForChild("Humanoid")
-
-
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-
-    animTrack:Stop()
-
-end
-
-
-local AnimAnim = Instance.new("Animation")
-
-AnimAnim.AnimationId = "rbxassetid://Animation id here"
-
-local Anim = Humanoid:LoadAnimation(AnimAnim)
-
-
-local startTime = 0
-
-
-Anim:Play()
-
-Anim:AdjustSpeed(1)
-
-Anim.TimePosition = startTime
-
-Anim:AdjustSpeed(1.1)
-
-
-delay(1.8, function()
-
-    Anim:Stop()
-
-end)
-
-
+        delay(1.8, function()
+            Anim:Stop()
+        end)
     end
-
 end
 
 -- Move 4 here
+humanoid.AnimationPlayed:Connect(onAnimationPlayedMove3)
+local animationId4 = 13603396939
 
+local function onAnimationPlayedMove4(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId4 then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
 
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://Animation id here"
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
 
-local animationId = 13603396939
-
-
-local player = game.Players.LocalPlayer
-
-local character = player.Character or player.CharacterAdded:Wait()
-
-local humanoid = character:WaitForChild("Humanoid")
-
-
-local function onAnimationPlayed(animationTrack)
-
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
-
-local p = game.Players.LocalPlayer
-
-local Humanoid = p.Character:WaitForChild("Humanoid")
-
-
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-
-    animTrack:Stop()
-
-end
-
-
-local AnimAnim = Instance.new("Animation")
-
-AnimAnim.AnimationId = "rbxassetid://Animation id here"
-
-local Anim = Humanoid:LoadAnimation(AnimAnim)
-
-
-local startTime = 0
-
-
-Anim:Play()
-
-Anim:AdjustSpeed(0)
-
-Anim.TimePosition = startTime
-
-Anim:AdjustSpeed(1)
-
-
+        local startTime = 0
+        Anim:Play()
+        Anim:AdjustSpeed(0)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1)
     end
-
 end
 
 player.CharacterAdded:Connect(function(newCharacter)
-
     character = newCharacter
-
     humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
     character.DescendantAdded:Connect(onBodyVelocityAdded)
 
-   
-
     for _, descendant in pairs(character:GetDescendants()) do
-
         onBodyVelocityAdded(descendant)
-
     end
-
 end)
