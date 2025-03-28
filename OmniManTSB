@@ -201,70 +201,66 @@ local function onAnimationPlayedMove4(animationTrack)
         Anim.TimePosition = startTime
         Anim:AdjustSpeed(1)
 
--- Ult Moves name
-local player = game.Players.LocalPlayer
-local playerGui = player.PlayerGui
-local hotbar = playerGui:FindFirstChild("Hotbar")
-local backpack = hotbar:FindFirstChild("Backpack")
-local hotbarFrame = backpack:FindFirstChild("Hotbar")
+-- Define the ult animation ID
+local ultAnimationId = 12342141464  -- Replace with your ult animation ID
 
--- Update Move 5 Name (Ult Move)
-local function updateUltMoveName()
-    local baseButton = hotbarFrame:FindFirstChild("5").Base
+-- Function to update the toolbar moves 5-8 after the ult animation ends
+local function updateMoveNamesAfterUlt()
+    local player = game.Players.LocalPlayer
+    local playerGui = player.PlayerGui
+    local hotbar = playerGui:FindFirstChild("Hotbar")
+    local backpack = hotbar:FindFirstChild("Backpack")
+    local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+    -- Update Move 1 Name (Ult Move)
+    local baseButton = hotbarFrame:FindFirstChild("1").Base
     local ToolName = baseButton.ToolName
     ToolName.Text = "Think Mark, THINK!"
-end
 
--- Update Move 6 Name
-local function updateMove6Name()
-    local baseButton = hotbarFrame:FindFirstChild("6").Base
+    -- Update Move 2 Name
+    local baseButton = hotbarFrame:FindFirstChild("2").Base
     local ToolName = baseButton.ToolName
     ToolName.Text = "For The First time in your life, I'm telling you the truth!"
-end
 
--- Update Move 7 Name
-local function updateMove7Name()
-    local baseButton = hotbarFrame:FindFirstChild("7").Base
+    -- Update Move 3 Name
+    local baseButton = hotbarFrame:FindFirstChild("3").Base
     local ToolName = baseButton.ToolName
     ToolName.Text = "Earth Isn't yours To conquer."
-end
 
--- Update Move 8 Name
-local function updateMove8Name()
-    local baseButton = hotbarFrame:FindFirstChild("8").Base
+    -- Update Move 4 Name
+    local baseButton = hotbarFrame:FindFirstChild("4").Base
     local ToolName = baseButton.ToolName
     ToolName.Text = "I Will Burn This Planet Down."
 end
 
--- Ult Trigger Function (When the ult plays)
-local function onUltPlayed()
-    -- Call to update the names after the ult is executed
-    updateUltMoveName()
-    updateMove6Name()
-    updateMove7Name()
-    updateMove8Name()
-end
-
--- Triggering the ult animation (example function for your ult animation)
-local function startUltAnimation()
-    -- Play your ult animation here (replace with your own ult animation code)
-    local animationId = 12342141464  -- Replace with your actual ult animation ID
+-- Continuous loop to check the player's animations and detect the ult animation
+local function checkUltAnimation()
+    local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
-    
-    local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://" .. animationId
-    local animationTrack = humanoid:LoadAnimation(animation)
-    
-    -- Play the ult animation
-    animationTrack:Play()
-    
-    -- Call the function to update the move names after the ult is played
-    onUltPlayed()
+
+    while true do
+        -- Check all currently playing animations on the humanoid
+        for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+            -- If the ult animation is playing
+            if animTrack.Animation.AnimationId == "rbxassetid://" .. ultAnimationId then
+                -- Wait for the ult animation to stop
+                animTrack.Stopped:Wait()
+
+                -- Wait for 1 second after the ult animation stops
+                wait(1)
+
+                -- Update the toolbar moves 5-8
+                updateMoveNamesAfterUlt()
+                break  -- Stop checking once the ult animation has finished and toolbar updated
+            end
+        end
+        wait(0.1)  -- Check every 0.1 seconds to avoid excessive looping
+    end
 end
 
--- Example of how you might trigger the ult
-startUltAnimation()
+-- Start the animation check loop
+checkUltAnimation()
 
    end
 end
