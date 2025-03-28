@@ -200,7 +200,73 @@ local function onAnimationPlayedMove4(animationTrack)
         Anim:AdjustSpeed(0)
         Anim.TimePosition = startTime
         Anim:AdjustSpeed(1)
-    end
+
+-- Ult Moves name
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+-- Update Move 5 Name (Ult Move)
+local function updateUltMoveName()
+    local baseButton = hotbarFrame:FindFirstChild("5").Base
+    local ToolName = baseButton.ToolName
+    ToolName.Text = "Think Mark, THINK!"
+end
+
+-- Update Move 6 Name
+local function updateMove6Name()
+    local baseButton = hotbarFrame:FindFirstChild("6").Base
+    local ToolName = baseButton.ToolName
+    ToolName.Text = "For The First time in your life, I'm telling you the truth!"
+end
+
+-- Update Move 7 Name
+local function updateMove7Name()
+    local baseButton = hotbarFrame:FindFirstChild("7").Base
+    local ToolName = baseButton.ToolName
+    ToolName.Text = "Earth Isn't yours To conquer."
+end
+
+-- Update Move 8 Name
+local function updateMove8Name()
+    local baseButton = hotbarFrame:FindFirstChild("8").Base
+    local ToolName = baseButton.ToolName
+    ToolName.Text = "I Will Burn This Planet Down."
+end
+
+-- Ult Trigger Function (When the ult plays)
+local function onUltPlayed()
+    -- Call to update the names after the ult is executed
+    updateUltMoveName()
+    updateMove6Name()
+    updateMove7Name()
+    updateMove8Name()
+end
+
+-- Triggering the ult animation (example function for your ult animation)
+local function startUltAnimation()
+    -- Play your ult animation here (replace with your own ult animation code)
+    local animationId = 12342141464  -- Replace with your actual ult animation ID
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    -- Play the ult animation
+    animationTrack:Play()
+    
+    -- Call the function to update the move names after the ult is played
+    onUltPlayed()
+end
+
+-- Example of how you might trigger the ult
+startUltAnimation()
+
+   end
 end
 
 player.CharacterAdded:Connect(function(newCharacter)
