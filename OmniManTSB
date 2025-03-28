@@ -67,7 +67,7 @@ local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-local modelIdMove1 = "3567467816"  -- Replace with your actual model ID
+local modelIdMove1 = "13166736383"  -- Replace with your actual model ID
 
 local function onAnimationPlayed(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
@@ -77,7 +77,7 @@ local function onAnimationPlayed(animationTrack)
         if not model.PrimaryPart then
             model.PrimaryPart = model:FindFirstChildWhichIsA("BasePart")
         end
-        model:SetPrimaryPartCFrame(character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -300) * CFrame.Angles(math.rad(90), 0, 0))
+        model:SetPrimaryPartCFrame(character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -100) * CFrame.Angles(math.rad(90), 0, 0))
         game:GetService("Debris"):AddItem(model, 10)
 
         -- Stop any playing animations for the player
