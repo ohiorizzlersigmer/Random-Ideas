@@ -67,7 +67,7 @@ local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-local modelIdMove1 = "8273626483"  -- Replace with your actual model ID
+local modelIdMove1 = "3567467816"  -- Replace with your actual model ID
 
 local function onAnimationPlayed(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
@@ -101,7 +101,7 @@ local function onAnimationPlayed(animationTrack)
 
         -- Move the player forward during the animation
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-        local movementSpeed = 700  -- Set the desired speed
+        local movementSpeed = 300  -- Set the desired speed
 
         -- Function to move the player forward
         local function moveForward()
