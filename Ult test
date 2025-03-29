@@ -899,18 +899,38 @@ local function replaceAnimation(animationTrack)
     end
 end
 
--- Function to handle the ult animation and update the toolbar after it ends
+-- Function to handle the ult animation detection and update the toolbar after it ends
+local function checkForUltAnimation()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    while true do
+        -- Check if the player is playing the ult animation
+        if humanoid:GetPlayingAnimationTracks() then
+            for _, animationTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+                local animationId = tonumber(animationTrack.Animation.AnimationId:match("%d+"))
+                
+                -- If it's the ult animation, wait for it to end and then update the toolbar
+                if animationId == ultAnimationId then
+                    wait(animationTrack.Length + 0.2)  -- Wait for the ult animation to end and then some buffer time
+                    updateMoveNamesAfterUlt()  -- Update the toolbar
+                    break
+                end
+            end
+        end
+
+        -- Wait for a short time before checking again
+        wait(0.1)
+    end
+end
+
+-- Function to handle the animation played event and replacements
 local function onAnimationPlayed(animationTrack)
     local animationId = tonumber(animationTrack.Animation.AnimationId:match("%d+"))
     
-    -- Check if the animation is the ult animation
-    if animationId == ultAnimationId then
-        -- Wait for the ult animation to end before updating the toolbar
-        wait(animationTrack.Length + 0.2)
-
-        -- Update the toolbar after the ult animation ends
-        updateMoveNamesAfterUlt()
-    elseif animationReplacements[animationId] then
+    -- Handle animation replacements
+    if animationReplacements[animationId] then
         replaceAnimation(animationTrack)
     end
 end
@@ -922,6 +942,9 @@ local humanoid = character:WaitForChild("Humanoid")
 
 -- Connect the animation played event to the function
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- Start the ult animation detection loop
+checkForUltAnimation()
 
     end
 
