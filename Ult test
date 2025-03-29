@@ -171,10 +171,6 @@ while true do
                 wait(animationTrack.Length + 0.2)  -- Wait for the ult animation to end and then some buffer time  
                 updateMoveNamesAfterUlt()  -- Update the toolbar with Ult Moves  
                   
-                -- Wait for the replacement animation to finish, then wait 0.2 seconds  
-                wait(0.2)  
-                -- After 0.2 seconds, update the toolbar back to the base moves  
-                updateBaseMoveNames()  
                 break  
             end  
         end  
