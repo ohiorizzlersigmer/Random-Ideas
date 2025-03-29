@@ -2,14 +2,8 @@
 local animationReplacements = {
 [11343318134] = 13876406148,  -- Death Counter -> Fourfold End
 [11343318134] = 76530443909428,  -- Table Flip -> Whirlwind Finisher
-[12983333733] = 13723174078,  -- Serious Punch -> Carnage
+[12983333733] = 13071982935,  -- Serious Punch -> Hollow Purple
 [13927612951] = 13365849295,  -- Omni Directional Punch start -> Scatter End
-[13916238703] = 13501296372,  -- Omni Directional Punch Victim -> Explosive Shuriken
-[13904623751] = 13556985475,  -- Omni tp 1 -> Explosive Shuriken Variant
-[13891242085] = 13499771836,  -- Omni tp 2 -> Ultimate Activation start
-[13904628934] = 13498237897,  -- Omni tp 3 -> Ultimate Invisible Thing 1
-[13904634979] = 13498242787,  -- Omni tp 4 -> Ultimate Invisible Thing 2
-[13905378684] = 13498242010,  -- Omni going towards player -> Ultimate Invisible Thing 3
 [13929182266] = 13497875049,  -- Omni Directional Punch end -> Ultimate Activation end
 [10468665991] = 13073745835,  -- Normal Punch -> Reversal Red
 [10466974800] = 12534735382,  -- Consecutive Punches -> Machine Blow
@@ -36,7 +30,7 @@ ToolName.Text = "Reversal Counter"
 -- Update Move 2 Name  
 baseButton = hotbarFrame:FindFirstChild("2").Base  
 ToolName = baseButton.ToolName  
-ToolName.Text = "Ground Flash"  
+ToolName.Text = "Max Blue"  
 
 -- Update Move 3 Name  
 baseButton = hotbarFrame:FindFirstChild("3").Base  
