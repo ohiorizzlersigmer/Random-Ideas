@@ -51,7 +51,7 @@ local baseButton = hotbarFrame:FindFirstChild("3").Base
 local ToolName = baseButton.ToolName
 
 
-ToolName.Text = "Clone Target"
+ToolName.Text = "Twofold Kick"
 
 
 local player = game.Players.LocalPlayer
@@ -93,7 +93,7 @@ local function findGuiAndSetText()
 
             if textLabel then
 
-                textLabel.Text = "Prison Break"
+                textLabel.Text = "Six Eyes"
 
             end
 
