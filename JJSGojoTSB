@@ -163,53 +163,9 @@ local soundeffect = Instance.new("Sound")
                 soundeffect:Play()
                 soundeffect.Volume = 2.5
 
-local Test = game.ReplicatedStorage.Resources.IceSpear.explode.explode.explosion
-local test = Test:Clone()
-test.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+task.wait(0.2) 
 
-for _, child in ipairs(test:GetChildren()) do
-    if child:IsA("ParticleEmitter") then
-        child:Emit(15)
-        child.Enabled = true
-    end
-end
-task.wait(0.5)
-
-        test:Destroy()
-local Test =  game.ReplicatedStorage.Resources.IceSpear.Throw.Attachment
-
-local test = Test:Clone()
-test.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
-
-
-for _, child in ipairs(test:GetChildren()) do
-    if child:IsA("ParticleEmitter") then
-        
-        child.Color = ColorSequence.new(Color3.new(0, 0, 0))
-        child:Emit(15)
-        child.Enabled = true
-    end
-end
-task.wait(0.4)
-
-        test:Destroy()
-local Test = game.ReplicatedStorage.Resources.IBFinisher.explo.explo.Attachment
-local test = Test:Clone()
-test.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
-
-
-for _, child in ipairs(test:GetChildren()) do
-    if child:IsA("ParticleEmitter") then
-        
-
-        child:Emit(15)
-        child.Enabled = true
-    end
-end
-task.wait(0.3)
-
-        test:Destroy()
-
+soundeffect.Destroy
 
     end
 
